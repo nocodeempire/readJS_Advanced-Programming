@@ -226,20 +226,107 @@ alert(book.edition); //2
 使用 ECMAScript 5 的 Object.getOwnPropertyDescriptor()方法，可以取得给定属性的描述符。  
 这个方法接收两个参数：属性所在的对象和要读取其描述符的属性名称。返回值是一个对象，如果是访问器属性，这个对象的属性有 configurable、 enumerable、 get 和 set；如果是数据属性，这个对象的属性有 configurable、 enumerable、 writable 和 value。
 ##### 工厂函数
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+````js
+function createPerson(name, age, job){
+  var o = new Object();
+  o.name = name;
+  o.age = age;
+  o.job = job;
+  o.sayName = function(){
+    alert(this.name);
+  };
+  return o;
+}
+var person1 = createPerson("Nicholas", 29, "Software Engineer");
+var person2 = createPerson("Greg", 27, "Doctor");
+````
+可以无数次地调用这个函数创建对象，但却没有解决对象识别的问题（即怎样知道一个对象的类型）  
+##### 构造函数
+````js
+function Person(name, age, job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  this.sayName = function(){
+    alert(this.name);
+  };
+}
+var person1 = new Person("Nicholas", 29, "Software Engineer");
+var person2 = new Person("Greg", 27, "Doctor");
+````
+每个实例对象都是Person的实例,但问题每个实例对象上的方法(由于方法也是对象)又都是独立开辟的空间
+##### 原型模式
+````js
+function Person(){  // 下面的Person都是这个构造函数
+}
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Software Engineer";
+Person.prototype.sayName = function(){
+  alert(this.name);
+};
+// 或者这么写
+/** Person.prototype = {
+  constructor : Person,
+  name : "Nicholas",
+  age : 29,
+  job: "Software Engineer",
+  sayName : function () {
+    alert(this.name);
+  }
+};
+*/
+````
+使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。  
+下面是一些es5的新方法, 看一下下面例子应该就知道是什么意思了
+````js
+// isPrototypeOf
+alert(Person.prototype.isPrototypeOf(person1)); //true
+alert(Person.prototype.isPrototypeOf(person2)); //true
+// getPrototypeOf
+alert(Object.getPrototypeOf(person1) == Person.prototype); //true
+alert(Object.getPrototypeOf(person1).name); //"Nicholas"
+````
+  
+hasOwnProperty()方法可以检测一个属性是存在于实例中
+````js
+var person1 = new Person();
+alert(person1.hasOwnProperty("name")); //false
+person1.name = "Greg";
+alert(person1.name); //"Greg"—— 来自实例
+alert(person1.hasOwnProperty("name")); //true
+````
+  
+有两种方式使用 in 操作符：单独使用和在 for-in 循环中使用。在单独使用时,in 操作符会在通过对象能够访问给定属性时返回 true，无论该属性存在于实例中还是原型中。
+````js
+var person1 = new Person();
+alert(person1.hasOwnProperty("name")); //false
+alert("name" in person1); //true
+````
+  
+由于 in 操作符只要通过对象能够访问到属性就返回 true， hasOwnProperty()只在属性存在于实例中时才返回 true，因此只要 in 操作符返回 true 而 hasOwnProperty()返回 false，就可以确定属性是原型中的属性。
+````js
+function hasPrototypeProperty(object, name){
+  return !object.hasOwnProperty(name) && (name in object);
+}
+````
+  
+Object.keys()这个方法接收一个对象作为参数，返回一个包含所有可枚举属性的字符串数组
+````js
+var keys = Object.keys(Person.prototype);
+alert(keys); //"name,age,job,sayName"
+var p1 = new Person();
+p1.name = "Rob";
+p1.age = 31;
+var p1keys = Object.keys(p1);
+alert(p1keys); //"name,age
+````
+如果你想要得到所有实例属性，无论它是否可枚举，都可以使用 Object.getOwnPropertyNames()方法。
+````js
+var keys = Object.getOwnPropertyNames(Person.prototype);
+alert(keys); //"constructor,name,age,job,sayName"
+````
+Object.keys()和 Object.getOwnPropertyNames()方法都可以用来替代 for-in 循环。 
 
 
 
