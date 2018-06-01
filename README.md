@@ -113,6 +113,39 @@ function sayColor(){
 var objectSayColor = sayColor.bind(o); // 方法调用的时候把this绑定到o 其实个人觉得bind和call与apply差不多,就是不需要传参
 objectSayColor(); //blue
 ````
+#### 基本包装类型
+引用类型与基本包装类型的主要区别就是对象的生存期。  
+使用 new 操作符创建的引用类型的实例，在执行流离开当前作用域之前都一直保存在内存中。而自动创建的基本包装类型的对象，则只存在于一行代码的执行瞬间，然后立即被销毁。  
+所以说定义了一个字符串var str = "a", str += "b", 其实是丢弃了a的空间重新在内存中开辟了一个新的空间ab.不过现在浏览器貌似对字符串拼接有改良,性能还不错.
+有一点需要注意.有没有关键字new是有区别的
+````js
+var value = "25";
+var number = Number(value); //转型函数
+alert(typeof number); //"number"
+var obj = new Number(value); //构造函数
+alert(typeof obj); //"object"
+````
+基本类型的数字,例如10,理论上不是对象,应该是不能.方法的,不过js内部应该是做过处理了.所以:  
+````js
+var num = 10.005;
+alert(num.toFixed(2)); //"10.01" toFixed()能够自动舍入
+````
+string的一些方法
+````js
+var stringValue = "hello";
+alert(stringValue.charAt(1)); //"e" 返回字符
+alert(stringValue.charCodeAt(1)); //输出"101" 返回字符编码
+alert(stringValue[1]); //"e" 字符串数组
+var result = stringValue.concat("world","!"); //result为"hello world!" 但我们更多的是直接"<strong>+</strong>"拼接字符串
+````
+
+
+
+
+
+
+
+
 
 
 
