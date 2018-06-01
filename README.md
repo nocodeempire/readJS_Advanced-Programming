@@ -278,6 +278,9 @@ Person.prototype.sayName = function(){
 */
 ````
 使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。  
+但原型有个问题,<strong>假设属性值是一个引用类型,对于这个属性值的修改,会反映到各个实例上</strong>  
+
+  
 下面是一些es5的新方法, 看一下下面例子应该就知道是什么意思了
 ````js
 // isPrototypeOf
@@ -343,7 +346,7 @@ Person.prototype = {
     alert(this.name);
   }
 };
-friend.sayName(); //error  个人理解 原型定义后,实例化的对象就已经指向了这个原型,把原型重新定义为一个新的对象,地址变了.先前定义的实例没有指向新对象 所以报错
+friend.sayName(); //error  个人理解 原型定义后,实例化的对象就已经指向了这个原型,把原型重新定义为一个新的对象,地址变了.先前定义的实例没有指向新对象 所以报错. 跟exports与module.exports 其实一个道理.
 ````
 
 
