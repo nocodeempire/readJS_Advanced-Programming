@@ -110,7 +110,7 @@ var o = { color: "blue" };
 function sayColor(){
   alert(this.color);
 }
-var objectSayColor = sayColor.bind(o); // 方法调用的时候把this绑定到
+var objectSayColor = sayColor.bind(o); // 方法调用的时候把this绑定到o 其实个人觉得bind和call与apply差不多,就是不需要传参
 objectSayColor(); //blue
 ````
 
