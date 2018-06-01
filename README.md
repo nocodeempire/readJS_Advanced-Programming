@@ -348,15 +348,196 @@ Person.prototype = {
 };
 friend.sayName(); //error  个人理解 原型定义后,实例化的对象就已经指向了这个原型,把原型重新定义为一个新的对象,地址变了.先前定义的实例没有指向新对象 所以报错. 跟exports与module.exports 其实一个道理.
 ````
-
-
-
-
-
-
-
-
-
+##### 组合使用构造函数和原型
+构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。  
+这样,每个实例都会有自己的一份实例属性的副本，但同时又共享着对方法的引用，最大限度地节省了内存。
+````js
+function Person(name, age, job){
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  this.friends = ["Shelby", "Court"];
+}
+Person.prototype = {
+  constructor : Person,
+  sayName : function(){
+  alert(this.name);
+  }
+}
+````
+##### 动态原型模式
+````js
+function Person(name, age, job){
+  //属性
+  this.name = name;
+  this.age = age;
+  this.job = job;
+  //方法
+  if (typeof this.sayName != "function"){
+    Person.prototype.sayName = function(){
+      alert(this.name);
+    };
+  }
+}
+````
+所有代码都在构造函数中,对于别的OO语言着而言,显得很清晰. 在实例化对象的时候,如果没有sayName方法则在原型上添加,实例对象有这个方法则不添加,很自由.  
+但个人认为对于一般项目这个方法省下的那点内存空间意义不大,还是"组合使用构造函数和原型"的方式更让人容易理解
+##### 寄生构造函数模式
+````js
+function Person(name, age, job){
+  var o = new Object();
+  o.name = name;
+  o.age = age;
+  o.job = job;
+  o.sayName = function(){
+    alert(this.name);
+  };
+  return o;
+}
+var friend = new Person("Nicholas", 29, "Software Engineer");
+friend.sayName(); //"Nicholas"
+````
+感觉和工厂模式无区别,每次实例化都会开辟一个新空间.纯理论,暂时想不到它的实际用途.
+##### 稳妥构造函数模式
+做的项目没那么高的安全指数.. 所以直接略过.
+#### 原型链
+````js
+function SuperType(){
+  this.property = true;
+}
+SuperType.prototype.getSuperValue = function(){
+  return this.property;
+};
+function SubType(){
+  this.subproperty = false;
+}
+SubType.prototype = new SuperType(); // 这句是精髓
+SubType.prototype.getSubValue = function (){
+  return this.subproperty;
+};
+var instance = new SubType();
+alert(instance.getSuperValue()); //true
+````
+懒的放图片了,就看看代码吧. 其实就是子元素的原型指向了父元素的实例对象, <strong>继承</strong>父元素的各个属性/方法.
+##### 原型链的问题
+````js
+function SuperType(){
+  this.colors = ["red", "blue", "green"];
+}
+function SubType(){
+}
+//继承了 SuperType
+SubType.prototype = new SuperType();
+var instance1 = new SubType();
+instance1.colors.push("black");
+alert(instance1.colors); //"red,blue,green,black"
+var instance2 = new SubType();
+alert(instance2.colors); //"red,blue,green,black"
+````
+包含引用类型值的原型属性会被所有实例共享
+##### 借用构造函数
+````js
+function SuperType(){
+  this.colors = ["red", "blue", "green"];
+}
+function SubType(){
+  //继承了 SuperType
+  SuperType.call(this);
+}
+var instance1 = new SubType();
+instance1.colors.push("black");
+alert(instance1.colors); //"red,blue,green,black"
+var instance2 = new SubType();
+alert(instance2.colors); //"red,blue,green"
+````
+相对于原型链而言，借用构造函数有一个很大的优势，即可以在子类型构造函数中向超类型构造函数传递参数。看下面这个例子。
+````js
+function SuperType(name){
+  this.name = name;
+}
+function SubType(){
+  //继承了 SuperType，同时还传递了参数
+  SuperType.call(this, "Nicholas");
+  //实例属性
+  this.age = 29;
+}
+var instance = new SubType();
+alert(instance.name); //"Nicholas";
+alert(instance.age); //29
+````
+##### 组合继承
+思路是使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。  
+组合继承最大的问题就是无论什么情况下，都会调用两次超类型构造函数：一次是在创建子类型原型的时候，另一次是在子类型构造函数内部。
+````js
+function SuperType(name){
+  this.name = name;
+  this.colors = ["red", "blue", "green"];
+}
+SuperType.prototype.sayName = function(){
+  alert(this.name);
+};
+function SubType(name, age){
+  //继承属性
+  SuperType.call(this, name); //第二次调用 SuperType()
+  this.age = age;
+}
+//继承方法
+SubType.prototype = new SuperType(); //第一次调用 SuperType()
+SubType.prototype.constructor = SubType; //原书有这行代码,将constructor指向SubType, 我觉得不加也无伤大雅,不清楚加的好处在哪
+SubType.prototype.sayAge = function(){
+  alert(this.age);
+};
+var instance1 = new SubType("Nicholas", 29);
+instance1.colors.push("black");
+alert(instance1.colors); //"red,blue,green,black"
+instance1.sayName(); //"Nicholas";
+instance1.sayAge(); //29
+var instance2 = new SubType("Greg", 27);
+alert(instance2.colors); //"red,blue,green"
+instance2.sayName(); //"Greg";
+instance2.sayAge(); //27
+````
+##### 原型式继承
+ECMAScript 5 通过新增 Object.create()方法规范化了原型式继承。
+````js
+var person = {
+  name: "Nicholas",
+  friends: ["Shelby", "Court", "Van"]
+};
+var anotherPerson = Object.create(person);
+anotherPerson.name = "Greg";
+anotherPerson.friends.push("Rob");
+var yetAnotherPerson = Object.create(person);
+yetAnotherPerson.name = "Linda";
+yetAnotherPerson.friends.push("Barbie");
+alert(person.friends); //"Shelby,Court,Van,Rob,Barbie"
+````
+##### 寄生式继承 略
+##### 寄生组合式继承
+````js
+function inheritPrototype(subType, superType){
+  var prototype = object(superType.prototype); //创建对象
+  prototype.constructor = subType; //增强对象
+  subType.prototype = prototype; //指定对象
+}
+function SuperType(name){
+  this.name = name;
+  this.colors = ["red", "blue", "green"];
+}
+SuperType.prototype.sayName = function(){
+  alert(this.name);
+};
+function SubType(name, age){
+  SuperType.call(this, name);
+  this.age = age;
+}
+inheritPrototype(SubType, SuperType);
+SubType.prototype.sayAge = function(){
+  alert(this.age);
+};
+````
+#### 闭包
+闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数
 
 
 
