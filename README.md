@@ -186,7 +186,18 @@ Math.random()方法返回大于等于 0 小于 1 的一个随机数
 举例来说，如果你想选择一个 1到 10 之间的数值，可以像下面这样编写代码：var num = Math.floor(Math.random() * 10 + 1);  
 如果想要选择一个介于 2 到 10 之间的值，就应该将上面的代码改成这样：var num = Math.floor(Math.random() * 9 + 2);  
 从 2 数到 10 要数 9 个数，因此可能值的总数就是 9，而第一个可能的值就是 2。  
+````js
+function selectFrom(lowerValue, upperValue) { //通用方法 介于几到几间的一个整数
+  var choices = upperValue - lowerValue + 1;
+  return Math.floor(Math.random() * choices + lowerValue);
+}
+var num = selectFrom(2, 10);
+alert(num); // 介于 2 和 10 之间（包括 2 和 10）的一个数值
 
+var colors = ["red", "green", "blue", "yellow", "black", "purple", "brown"];
+var color = colors[selectFrom(0, colors.length-1)];
+alert(color); // 可能是数组中包含的任何一个字符串
+````
 
 
 
