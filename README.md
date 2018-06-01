@@ -326,10 +326,25 @@ alert(p1keys); //"name,age
 var keys = Object.getOwnPropertyNames(Person.prototype);
 alert(keys); //"constructor,name,age,job,sayName"
 ````
-Object.keys()和 Object.getOwnPropertyNames()方法都可以用来替代 for-in 循环。 
+Object.keys()和 Object.getOwnPropertyNames()方法都可以用来替代 for-in 循环。   
 
-
-
+有一点要<strong>注意</strong>:  
+调用构造函数时会为实例添加一个指向最初原型的[[Prototype]]指针，而把原型修改为另外一个对象就等于切断了构造函数与最初原型之间的联系。
+````js
+function Person(){
+}
+var friend = new Person();
+Person.prototype = {
+  constructor: Person,
+  name : "Nicholas",
+  age : 29,
+  job : "Software Engineer",
+  sayName : function () {
+    alert(this.name);
+  }
+};
+friend.sayName(); //error  个人理解 原型定义后,实例化的对象就已经指向了这个原型,把原型重新定义为一个新的对象,地址变了.先前定义的实例没有指向新对象 所以报错
+````
 
 
 
