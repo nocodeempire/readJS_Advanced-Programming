@@ -1,6 +1,6 @@
 # 读javascript高级程序设计笔记
 刚开始做前端的时候翻过这本红皮书和犀牛书,差不多都看了一半多,没能坚持看完.现在工作相对清闲.准备看完这两本书.对一些知识点也记录下.
-
+***
 #### typeof
 判断类型加不加括号都可以是因为:typeof是一个操作符而不是函数，因此例子中的圆括号尽管可以使用，但不是必需的。  
 typeof null会返回"object"，因为特殊值 null 被认为是一个空的对象引用
@@ -113,6 +113,7 @@ function sayColor(){
 var objectSayColor = sayColor.bind(o); // 方法调用的时候把this绑定到o 其实个人觉得bind和call与apply差不多,就是不需要传参
 objectSayColor(); //blue
 ````
+***
 #### 基本包装类型
 引用类型与基本包装类型的主要区别就是对象的生存期。  
 使用 new 操作符创建的引用类型的实例，在执行流离开当前作用域之前都一直保存在内存中。而自动创建的基本包装类型的对象，则只存在于一行代码的执行瞬间，然后立即被销毁。  
@@ -198,6 +199,7 @@ var colors = ["red", "green", "blue", "yellow", "black", "purple", "brown"];
 var color = colors[selectFrom(0, colors.length-1)];
 alert(color); // 可能是数组中包含的任何一个字符串
 ````
+***
 ### 对象
 #### Object.defineProperty()
 这个方法接收三个参数：属性所在的对象、属性的名字和一个描述符对象。  
@@ -400,6 +402,7 @@ friend.sayName(); //"Nicholas"
 感觉和工厂模式无区别,每次实例化都会开辟一个新空间.纯理论,暂时想不到它的实际用途.
 ##### 稳妥构造函数模式
 做的项目没那么高的安全指数.. 所以直接略过.
+***
 #### 原型链
 ````js
 function SuperType(){
@@ -536,6 +539,7 @@ SubType.prototype.sayAge = function(){
   alert(this.age);
 };
 ````
+***
 #### 闭包
 闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数.(老生常谈,不展开)
 #### 模块模式
@@ -555,6 +559,7 @@ var singleton = function(){
   };
 }();
 早几年前做的项目都是企业后台,bootstrap搭的,那时候每个页面对应js都是这么写的.
+***
 #### BOM
 跨框架  
 假设没有frame,那么top parent self window 都相同,都是window对象
