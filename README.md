@@ -83,10 +83,36 @@ var pattern1 = /[bc]at/i;
 // 与 pattern1 相同，只不过是使用构造函数创建的
 var pattern2 = new RegExp("[bc]at", "i");
 ````
-看到5.5.1 明天继续
-
-
-
+#### sort排序
+````js
+function createComparisonFunction(propertyName) { // sort根据特性属性值排序
+  return function(object1, object2){
+    var value1 = object1[propertyName];
+    var value2 = object2[propertyName];
+    if (value1 < value2){
+      return -1;
+    } else if (value1 > value2){
+      return 1;
+    } else {
+      return 0;
+    }
+  };
+}
+var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
+data.sort(createComparisonFunction("age"));
+alert(data[0].name); //Zachary
+````
+#### apply call bind
+apply与call相对熟悉,平时有用,bind很少用到,语法如下:
+````js
+window.color = "red";
+var o = { color: "blue" };
+function sayColor(){
+  alert(this.color);
+}
+var objectSayColor = sayColor.bind(o); // 方法调用的时候把this绑定到
+objectSayColor(); //blue
+````
 
 
 
