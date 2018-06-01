@@ -594,7 +594,7 @@ var topPos = (typeof window.screenTop == "number") ? window.screenTop : window.s
 | search        | "?q=javascript"             | 返回URL的查询字符串。这个字符串以问号开头                                   |
 
 
-
+看到8.2
 
 
 
