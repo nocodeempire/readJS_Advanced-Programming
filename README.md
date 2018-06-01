@@ -136,8 +136,46 @@ var stringValue = "hello";
 alert(stringValue.charAt(1)); //"e" 返回字符
 alert(stringValue.charCodeAt(1)); //输出"101" 返回字符编码
 alert(stringValue[1]); //"e" 字符串数组
-var result = stringValue.concat("world","!"); //result为"hello world!" 但我们更多的是直接"<strong>+</strong>"拼接字符串
+var result = stringValue.concat("world","!"); //result为"hello world!" 但我们更多的是直接 + 拼接字符串
+// 正值 slice()、 substr()和 substring()
+var stringValue = "hello world";
+alert(stringValue.slice(3)); //"lo world"
+alert(stringValue.substring(3)); //"lo world"
+alert(stringValue.substr(3)); //"lo world"
+alert(stringValue.slice(3, 7)); //"lo w"
+alert(stringValue.substring(3,7)); //"lo w"
+alert(stringValue.substr(3, 7)); //"lo worl"
 ````
+在传递给这些方法的参数是负值的情况下，它们的行为就不尽相同了。
+其中， slice()方法会将传入的负值与字符串的长度相加， substr()方法将负的第一个参数加上字符串的长度，而将负的第二个
+参数转换为 0。最后， substring()方法会把所有负值参数都转换为 0。下面来看例子。 
+大部分场景下记住一个负数参数即可,特殊场景mdn查询
+````js
+var stringValue = "hello world";
+alert(stringValue.slice(-3)); //"rld"
+alert(stringValue.substring(-3)); //"hello world"
+alert(stringValue.substr(-3)); //"rld"
+alert(stringValue.slice(3, -4)); //"lo w"
+alert(stringValue.substring(3, -4)); //"hel"
+alert(stringValue.substr(3, -4)); //""（空字符串）
+````
+ECMAScript 5 为所有字符串定义了 trim()方法。这个方法会创建一个字符串的<strong>副本</strong>，删除前置及后缀的所有空格，然后返回结果。  
+大小写转换: toLowerCase()、 toLocaleLowerCase()、 toUpperCase()和 toLocaleUpperCase()。  
+String 类型定义了几个用于在字符串中匹配模式的方法。第一个方法就是 match(),另一个用于查找模式的方法是 search()。(详见MDN)  
+替换子字符串的操作: replace()
+分割: split()
+#### URI编码
+encodeURI()不会对本身属于 URI 的特殊字符进行编码，例如冒号、正斜杠、问号和井字号；而 encodeURIComponent()则会对它发现的任何非标准字符进行编码。来看下面的例子
+````js
+var uri = "http://www.wrox.com/illegal value.htm#start";
+alert(encodeURI(uri)); // "http://www.wrox.com/illegal%20value.htm#start"
+alert(encodeURIComponent(uri)); //"http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.htm%23start"
+````
+
+
+
+
+
 
 
 
