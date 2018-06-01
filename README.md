@@ -537,9 +537,54 @@ SubType.prototype.sayAge = function(){
 };
 ````
 #### 闭包
-闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数
-
-
+闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数.(老生常谈,不展开)
+#### 模块模式
+var singleton = function(){
+  //私有变量和私有函数
+  var privateVariable = 10;
+  function privateFunction(){
+    return false;
+  }
+  //特权/公有方法和属性
+  return {
+    publicProperty: true,
+    publicMethod : function(){
+      privateVariable++;
+      return privateFunction();
+    }
+  };
+}();
+早几年前做的项目都是企业后台,bootstrap搭的,那时候每个页面对应js都是这么写的.
+#### BOM
+跨框架  
+假设没有frame,那么top parent self window 都相同,都是window对象
+##### 窗口位置
+使用下列代码可以跨浏览器取得窗口左边和上边的位置。
+````js
+var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX;
+var topPos = (typeof window.screenTop == "number") ? window.screenTop : window.screenY;
+````
+##### 页面视口的大小
+````js
+  var clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+  var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+````
+##### 导航和打开窗口
+使用 window.open()方法既可以导航到一个特定的 URL，也可以打开一个新的浏览器窗口。  
+这个方法可以接收 4 个参数：要加载的 URL、窗口目标、一个特性字符串以及一个表示新页面是否取代浏览器历史记录中当前加载页面的布尔值。  
+通常只须传递第一个参数，最后一个参数只在不打开新窗口的情况下使用  
+新创建的 window 对象有一个 opener 属性，其中保存着打开它的原始窗口对象。这个属性只在弹出窗口中的最外层 window 对象（top）中有定义，而且指向调用 window.open()的窗口或框架.
+##### location 对象
+它既是 window 对象的属性，也是document 对象的属性；换句话说， window.location 和 document.location 引用的是同一个对象。
+属 性 名 例 子 说 明
+hash "#contents" 返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串
+host "www.wrox.com:80" 返回服务器名称和端口号（如果有）
+hostname "www.wrox.com" 返回不带端口号的服务器名称
+href "http:/www.wrox.com" 返回当前加载页面的完整URL。而location对象的toString()方法也返回这个值
+pathname "/WileyCDA/" 返回URL中的目录和（或）文件名
+port "8080" 返回URL中指定的端口号。如果URL中不包含端口号，则这个属性返回空字符串
+protocol "http:" 返回页面使用的协议。通常是http:或https:
+search "?q=javascript" 返回URL的查询字符串。这个字符串以问号开头
 
 
 
