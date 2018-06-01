@@ -198,6 +198,73 @@ var colors = ["red", "green", "blue", "yellow", "black", "purple", "brown"];
 var color = colors[selectFrom(0, colors.length-1)];
 alert(color); // 可能是数组中包含的任何一个字符串
 ````
+### 对象
+#### Object.defineProperty()
+这个方法接收三个参数：属性所在的对象、属性的名字和一个描述符对象。  
+其中，描述符（descriptor）对象的属性必须是：configurable、 enumerable、 writable 和 value。
+````js
+var book = {
+  _year: 2004,
+  edition: 1
+};
+Object.defineProperty(book, "year", { // 数据实现双向绑定的基础
+  get: function(){
+    return this._year;
+  },
+  set: function(newValue){
+    if (newValue > 2004) {
+      this._year = newValue;
+      this.edition += newValue - 2004;
+    }
+  }
+});
+book.year = 2005;
+alert(book.edition); //2
+````
+由于为对象定义多个属性的可能性很大,ECMAScript 5 又定义了一个 Object.defineProperties()方法。利用这个方法可以通过描述符一次定义多个属性。  
+  
+使用 ECMAScript 5 的 Object.getOwnPropertyDescriptor()方法，可以取得给定属性的描述符。  
+这个方法接收两个参数：属性所在的对象和要读取其描述符的属性名称。返回值是一个对象，如果是访问器属性，这个对象的属性有 configurable、 enumerable、 get 和 set；如果是数据属性，这个对象的属性有 configurable、 enumerable、 writable 和 value。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
