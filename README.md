@@ -171,12 +171,21 @@ var uri = "http://www.wrox.com/illegal value.htm#start";
 alert(encodeURI(uri)); // "http://www.wrox.com/illegal%20value.htm#start"
 alert(encodeURIComponent(uri)); //"http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.htm%23start"
 ````
-
-
-
-
-
-
+解码: decodeURI()和decodeURIComponent()
+#### Math
+````js
+var values = [1, 2, 3, 4, 5, 6, 7, 8];
+var max = Math.max.apply(Math, values); // apply第一个参数可以使window null等
+````
+ Math.ceil()执行向上舍入，即它总是将数值向上舍入为最接近的整数；  
+ Math.floor()执行向下舍入，即它总是将数值向下舍入为最接近的整数；  
+ Math.round()执行标准舍入，即它总是将数值四舍五入为最接近的整数  
+Math.random()方法返回大于等于 0 小于 1 的一个随机数  
+套用下面的公式，就可以利用 Math.random()从某个整数范围内随机选择一个值。  
+值 = Math.floor(Math.random() * 可能值的总数 + 第一个可能的值)  
+举例来说，如果你想选择一个 1到 10 之间的数值，可以像下面这样编写代码：var num = Math.floor(Math.random() * 10 + 1);  
+如果想要选择一个介于 2 到 10 之间的值，就应该将上面的代码改成这样：var num = Math.floor(Math.random() * 9 + 2);  
+从 2 数到 10 要数 9 个数，因此可能值的总数就是 9，而第一个可能的值就是 2。  
 
 
 
