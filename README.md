@@ -576,11 +576,17 @@ var topPos = (typeof window.screenTop == "number") ? window.screenTop : window.s
 新创建的 window 对象有一个 opener 属性，其中保存着打开它的原始窗口对象。这个属性只在弹出窗口中的最外层 window 对象（top）中有定义，而且指向调用 window.open()的窗口或框架.
 ##### location 对象
 它既是 window 对象的属性，也是document 对象的属性；换句话说， window.location 和 document.location 引用的是同一个对象。  
-| 属性        | 例 子              |  说 明                                                                     |  
-| --------   | -----------------: | :------------------------------------------------------------------------: |  
-| hash       | "#contents"        |   返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串    |  
-| host       | "www.wrox.com:80"  |   返回服务器名称和端口号（如果有）                                            |  
-| 草莓       | $1                  |   7                                                                        |  
+
+| Tables        | Are                         | Cool                                                          |
+| ------------- |:---------------------------:| -------------------------------------------------------------:|
+| col 3 is      | right-aligned               | $1600                                                         |
+| col 2 is      | centered                    | $12                                                           |
+| zebra stripes | are neat                    | $1                                                            |
+
+作者：Te_Lee
+链接：https://www.jianshu.com/p/1e402922ee32/
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 
 
