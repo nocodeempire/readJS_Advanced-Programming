@@ -543,6 +543,7 @@ SubType.prototype.sayAge = function(){
 #### 闭包
 闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数.(老生常谈,不展开)
 #### 模块模式
+````js
 var singleton = function(){
   //私有变量和私有函数
   var privateVariable = 10;
@@ -558,10 +559,10 @@ var singleton = function(){
     }
   };
 }();
+````
 早几年前做的项目都是企业后台,bootstrap搭的,那时候每个页面对应js都是这么写的.
 ***
 #### BOM
-跨框架  
 假设没有frame,那么top parent self window 都相同,都是window对象
 ##### 窗口位置
 使用下列代码可以跨浏览器取得窗口左边和上边的位置。
