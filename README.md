@@ -593,8 +593,68 @@ var topPos = (typeof window.screenTop == "number") ? window.screenTop : window.s
 | protocol      | "http:"                     | 返回页面使用的协议。通常是http:或https:                                    |
 | search        | "?q=javascript"             | 返回URL的查询字符串。这个字符串以问号开头                                   |
 
+````js
+//假设初始 URL 为 http://www.wrox.com/WileyCDA/
+//将 URL 修改为"http://www.wrox.com/WileyCDA/#section1"
+location.hash = "#section1";
+//将 URL 修改为"http://www.wrox.com/WileyCDA/?q=javascript"
+location.search = "?q=javascript";
+//将 URL 修改为"http://www.yahoo.com/WileyCDA/"
+location.hostname = "www.yahoo.com";
+//将 URL 修改为"http://www.yahoo.com/mydir/"
+location.pathname = "mydir";
+//将 URL 修改为"http://www.yahoo.com:8080/WileyCDA/"
+location.port = 8080;
+//每次修改 location 的属性（hash 除外），页面都会以新 URL 重新加载。
+````
+***
+#### 浏览器检测
+1.能力检测  
+2.怪癖检测  
+3.用户代理检测  
+#### DOM
+````js
+//document.documentElement 整个文档 即<html>....</html>
+//document.body 整个body 即<body>....</body>
+//document.url 即location.url
+//document.domain 
+// ...
+````
+div.tagName 实际上输出的是"DIV"而非"div"。在 HTML 中，标签名始终都以全部大写表示  
+取得特性: getAttribute()、 setAttribute()和 removeAttribute()  
+...  
+scrollIntoView()方法 (除了smooth属性外,现代浏览器几乎都能用了)  
+children属性 只包含元素中同样还是元素的子节点  
+contains()方法 调用的应该是祖先节点，也就是搜索开始的节点，这个方法接收一个参数，即要检测的后代节点。如果被检测的节点是后代节点，该方法返回 true；否则，返回 false。
 
-看到8.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
