@@ -702,6 +702,9 @@ scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际�
 3.屏幕坐标位置  
 鼠标事件发生时，不仅会有相对于浏览器窗口的位置，还有一个相对于整个电脑屏幕的位置。而通过 screenX 和 screenY 属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息。  
 
+<img src="http://read.mlook.mobi/static/tmp/a1/10363/epub/58195//images/01233.jpg" />  
+
+
 ##### 触摸与手势事件
  touchstart：当手指触摸屏幕时触发；即使已经有一个手指放在了屏幕上也会触发。  
  touchmove：当手指在屏幕上滑动时连续地触发。在这个事件发生期间，调用 preventDefault()可以阻止滚动。  
@@ -760,45 +763,95 @@ XDM 的核心是 postMessage()方法。
  source：发送消息的文档的 window 对象的代理。这个代理对象主要用于在发送上一条消息的窗口中调用 postMessage()方法。如果发送消息的窗口来自同一个域，那这个对象就是window。  
 
 #### 媒体元素
-<video>和<audio>元素都提供了完善的 JavaScript 接口。下表列出了这两个元素共有的属性，通过这些属性可以知道媒体的当前状态。  
-  
-| 属 性                       | 数据类型       | 说 明                                                                    |
-| --------------------------- |:-------------:| ------------------------------------------------------------------------:|
-| autoplay                    | 布尔值        |  取得或设置autoplay标志                                                    | 
-| buffered                  | 时间范围 | 表示已下载的缓冲的时间范围的对象 | 
-| bufferedBytes | 字节范围 | 表示已下载的缓冲的字节范围的对象 | 
-| bufferingRate | 整数 | 下载过程中每秒钟平均接收到的位数 | 
-| bufferingThrottled | 布尔值 | 表示浏览器是否对缓冲进行了节流 | 
-| controls | 布尔值 | 取得或设置controls属性，用于显示或隐藏浏览器内置的控件 | 
-| currentLoop | 整数 | 媒体文件已经循环的次数 | 
-| currentSrc | 字符串 | 当前播放的媒体文件的URL | 
-| currentTime | 浮点数 | 已经播放的秒数 | 
-| defaultPlaybackRate | 浮点数 | 取得或设置默认的播放速度。默认值为1.0秒 | 
-| duration | 浮点数 | 媒体的总播放时间（秒数） | 
-| ended | 布尔值 | 表示媒体文件是否播放完成 | 
-| loop | 布尔值 | 取得或设置媒体文件在播放完成后是否再从头开始播放 | 
-| muted | 布尔值 | 取得或设置媒体文件是否静音 | 
-| networkState | 整数 | 表示当前媒体的网络连接状态： 0表示空， 1表示正在加载， 2表示正在加载元数据， 3表示已经加载了第一帧， 4表示加载完成 | 
-| paused | 布尔值 | 表示播放器是否暂停 | 
-| playbackRate | 浮点数 | 取得或设置当前的播放速度。用户可以改变这个值，让媒体播放速度变快或变慢 | 
-| played | 时间范围 | 到目前为止已经播放的时间范围 | 
-| readyState | 整数 | 表示媒体是否已经就绪（可以播放了）。 0表示数据不可用， 1表示可以显示当前帧， 2表示可以开始播放， 3表示媒体可以从头到尾播放 | 
-| seekable | 时间范围 | 可以搜索的时间范围 | 
-| seeking | 布尔值 | 表示播放器是否正移动到媒体文件中的新位置 | 
-| src | 字符串|  媒体文件的来源。任何时候都可以重写这个属性 | 
-| start | 浮点数 | 取得或设置媒体文件中开始播放的位置，以秒表示 | 
-| totalBytes | 整数 | 当前资源所需的总字节数 | 
-| videoHeight | 整数 | 返回视频（不一定是元素）的高度。只适用于<video> | 
-| videoWidth | 整数 | 返回视频（不一定是元素）的宽度。只适用于<video> | 
-| volume | 浮点数 | 取得或设置当前音量，值为0.0到1.0 | 
+<video>和<audio>元素都提供了完善的 JavaScript 接口。
 
+##### 历史状态管理
+通过 hashchange 事件，可以知道 URL 的参数什么时候发生了变化，即什么时候该有所反应。而通过状态管理API，能够在不加载新页面的情况下改变浏览器的URL。为此，需要使用history.pushState()方法，该方法可以接收三个参数：状态对象、新状态的标题和可选的相对 URL。例如：  
+history.pushState({name:"Nicholas"}, "Nicholas' page", "nicholas.html");  
+执行 pushState()方法后，新的状态信息就会被加入历史状态栈，而浏览器地址栏也会变成新的相对 URL。但是，浏览器并不会真的向服务器发送请求，即使状态改变之后查询 location.href 也会返回与地址栏中相同的地址。  
+要更新当前状态，可以调用 replaceState(),例如:  
+history.replaceState({name:"Greg"}, "Greg's page");
 
+#### ajax
+原生ajax, 远古时代的浏览器懒的不兼容;  
+````js
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){
+  if (xhr.readyState == 4){
+    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+      alert(xhr.responseText);
+    } else {
+      alert("Request was unsuccessful: " + xhr.status);
+    }
+  }
+};
+xhr.open("get", "example.txt", true);
+xhr.send(null);
+````
+##### 数组分块
+````js
+setTimeout(function(){
+  //取出下一个条目并处理
+  var item = array.shift();
+  process(item);
+  //若还有条目，再设置另一个定时器
+  if(array.length > 0){
+    setTimeout(arguments.callee, 100);
+  }
+}, 100);
+````
+在数组分块模式中， array 变量本质上就是一个“待办事宜”列表，它包含了要处理的项目。使用shift()方法可以获取队列中下一个要处理的项目，然后将其传递给某个函数。如果在队列中还有其他项目，则设置另一个定时器，并通过 arguments.callee 调用同一个匿名函数。要实现数组分块非常简单，可以使用以下函数
+````js
+function chunk(array, process, context){
+  setTimeout(function(){
+    var item = array.shift();
+    process.call(context, item);
+    if (array.length > 0){
+      setTimeout(arguments.callee, 100);
+    }
+  }, 100);
+}
+````
+chunk()方法接受三个参数：要处理的项目的数组，用于处理项目的函数，以及可选的运行该函数的环境。函数内部用了之前描述过的基本模式，通过 call()调用的 process()函数，这样可以设置一个合适的执行环境（如果必须）。定时器的时间间隔设置为了 100ms，使得 JavaScript 进程有时间在处理项目的事件之间转入空闲。你可以根据你的需要更改这个间隔大小，不过 100ms 在大多数情况下效果不错。可以按如下所示使用该函数：
+````js
+var data = [12,123,1234,453,436,23,23,5,4123,45,346,5634,2234,345,342];
+function printValue(item){
+  var div = document.getElementById("myDiv");
+  div.innerHTML += item + "<br>";
+}
+chunk(data, printValue);
+````
 
-
-
-
-
-
+##### 节流
+````js
+var processor = {
+  timeoutId: null,
+  //实际进行处理的方法
+  performProcessing: function(){
+    //实际执行的代码
+  },
+  //初始处理调用的方法
+  process: function(){
+    clearTimeout(this.timeoutId);
+    var that = this;
+    this.timeoutId = setTimeout(function(){
+      that.performProcessing();
+    }, 100);
+  }
+};
+//尝试开始执行
+processor.process();
+````
+时间间隔设为了 100ms，这表示最后一次调用 process()之后至少 100ms 后才会调用 performProcessing()。所以如果 100ms 之内调用了 process()共 20 次，performanceProcessing()仍只会被调用一次。  
+这个模式可以使用 throttle()函数来简化，这个函数可以自动进行定时器的设置和清除，如下例所示：  
+````js
+function throttle(method, context) { //throttle()函数接受两个参数：要执行的函数以及在哪个作用域中执行。
+  clearTimeout(method.tId);
+  method.tId= setTimeout(function(){
+    method.call(context);
+  }, 100);
+}
+````
 
 
 
