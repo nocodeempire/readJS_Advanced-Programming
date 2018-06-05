@@ -650,13 +650,16 @@ clientHeight 属性是元素内容区高度加上上下内边距高度。
  scrollWidth：在没有滚动条的情况下，元素内容的总宽度。  
  scrollLeft：被隐藏在内容区域左侧的像素数。通过设置这个属性可以改变元素的滚动位置。  
  scrollTop：被隐藏在内容区域上方的像素数。通过设置这个属性可以改变元素的滚动位置。  
-<img src="https://pic002.cnblogs.com/images/2011/280254/2011112914120887.png" />
+<strong>scrollLeft 和 scrollTop这两个属性都是可以设置的，因此将它们设置为 0，就可以重置元素的滚动位置。</strong>  
+<img src="https://pic002.cnblogs.com/images/2011/280254/2011112914120887.png" />  
 
-
-
-
-
-
+##### 确认元素大小
+getBoundingClientRect()方法。这个方法返回会一个矩形对象，包含 4 个属性： left、 top、 right 和 bottom。  
+浏览器的实现稍有不同。 IE8 及更早版本认为文档的左上角坐标是(2, 2)，而其他浏览器包括 IE9 则将传统的(0,0)作为起点坐标。  
+***
+#### DOM事件流
+三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段.  
+<img src="https://images2015.cnblogs.com/blog/402105/201508/402105-20150825224811297-382732435.png" />
 
 
 
