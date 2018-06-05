@@ -844,17 +844,87 @@ function throttle(method, context) { //throttle()函数接受两个参数：要�
   }, 100);
 }
 ````
+#### 数据存储
+1.cookie  
+2.localStorage  
+3.sessionStorage
+IndexedDB 最大的特色是使用对象保存数据，而不是使用表来保存数据。一个 IndexedDB 数据库，就是一组位于相同命名空间下的对象的集合。(暂时没用过)
 
+#### 页面最小化等
+ document.hidden：表示页面是否隐藏的布尔值。页面隐藏包括页面在后台标签页中或者浏览
+器最小化。
+ document.visibilityState：表示下列 4 个可能状态的值。
+1.页面在后台标签页中或浏览器最小化。
+2.页面在前台标签页中。
+3.实际的页面已经隐藏，但用户可以看到页面的预览（就像在 Windows 7 中，用户把鼠标移动到任务栏的图标上，就可以显示浏览器中当前页面的预览）。
+4.页面在屏幕外执行预渲染处理。
+ visibilitychange 事件：当文档从可见变为不可见或从不可见变为可见时，触发该事件。
 
+#### 地理定位（geolocation）
+https://developer.mozilla.org/zh-CN/docs/Web/API/Geolocation/Using_geolocation
 
+#### File API
+每个 File 对象都有下列只读属性。  
+ name：本地文件系统中的文件名。  
+ size：文件的字节大小。  
+ type：字符串，文件的 MIME 类型。  
+ lastModifiedDate：字符串，文件上一次被修改的时间。  
+````js
+//举个例子，通过侦听 change 事件并读取 files 集合就可以知道选择的每个文件的信息：
+var filesList = document.getElementById("files-list");
+EventUtil.addHandler(filesList, "change", function(event){
+  var files = EventUtil.getTarget(event).files,
+  i = 0,
+  len = files.length;
+  while (i < len){
+    console.log(files[i].name + " (" + files[i].type + ", " + files[i].size + " bytes) ");
+    i++;
+  }
+});
+````
+仅仅这一项功能，对 Web 应用开发来说就已经是非常大的进步了。不过， File API 的功能还不止于此，通过它提供的 FileReader 类型甚至还可以读取文件中的数据
+##### FileReader类型
+````js
+var filesList = document.getElementById("files-list");
+EventUtil.addHandler(filesList, "change", function(event){
+  var info = "",
+    output = document.getElementById("output"),
+    progress = document.getElementById("progress"),
+    files = EventUtil.getTarget(event).files,
+    type = "default",
+    reader = new FileReader();
+  if (/image/.test(files[0].type)){
+    reader.readAsDataURL(files[0]);
+    type = "image";
+  } else {
+    reader.readAsText(files[0]);
+    type = "text";
+  }
+  reader.onerror = function(){
+    output.innerHTML = "Could not read file, error code is " + reader.error.code;
+  };
+  reader.onprogress = function(event){
+    if (event.lengthComputable){
+      progress.innerHTML = event.loaded + "/" + event.total;
+    }
+  };
+  reader.onload = function(){
+    var html = "";
+    switch(type){
+      case "image":
+        html = "<img src=\"" + reader.result + "\">";
+        break;
+      case "text":
+        html = reader.result;
+        break;
+    }
+    output.innerHTML = html;
+  };
+});
+````
+这个例子读取了表单字段中选择的文件，并将其内容显示在了页面中。如果文件有 MIMI 类型，表示文件是图像，因此在 load 事件中就把它保存为数据 URI，并在页面中将这幅图像显示出来。如果文件不是图像，则以字符串形式读取文件内容，然后如实在页面中显示读取到的内容。这里使用了progress 事件来跟踪读取了多少字节的数据，而 error 事件则用于监控发生的错误。
 
-
-
-
-
-
-
-
+# 全书完
 
 
 
