@@ -712,12 +712,8 @@ scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际�
  blur：当前字段失去焦点时触发。  
  change：对于<input>和<textarea>元素，在它们失去焦点且 value 值改变时触发；对于<select>元素，在其选项改变时触发。  
  focus：当前字段获得焦点时触发。  
-change 事件在不同表单控件中触发的次数会有所不同。对于<input>和<textarea>元素，当它们从获得焦点到失去焦点且 value 值改变时，
-才会触发 change 事件。对于<select>元素，只要用户选择了不同的选项，就会触发 change 事件；换句话说，不失去焦点也会触发 change 事件。  
-selectionStart 和 selectionEnd 这两个属性中保存的是基于 0 的数值，表示所选择文本的范围（即文本选区开头和结尾的偏移量）  
-    
-除select()方法之外，所有文本框都有一个setSelectionRange()方法。这个方法接收两个参数：要选择的第一个字符的索引和要选择的最后一个字符之后的字符的索引
-（类似于 substring()方法的两个参数）。
+change 事件在不同表单控件中触发的次数会有所不同。对于<input>和<textarea>元素，当它们从获得焦点到失去焦点且 value 值改变时，才会触发 change 事件。对于<select>元素，只要用户选择了不同的选项，就会触发 change 事件；换句话说，不失去焦点也会触发 change 事件。  
+selectionStart 和 selectionEnd 这两个属性中保存的是基于 0 的数值，表示所选择文本的范围（即文本选区开头和结尾的偏移量）除select()方法之外，所有文本框都有一个setSelectionRange()方法。这个方法接收两个参数：要选择的第一个字符的索引和要选择的最后一个字符之后的字符的索引（类似于 substring()方法的两个参数）。
 
 ##### 操作剪贴板 (存在兼容性)
  beforecopy：在发生复制操作前触发。  
