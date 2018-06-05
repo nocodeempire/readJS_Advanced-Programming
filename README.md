@@ -727,9 +727,70 @@ selectionStart 和 selectionEnd 这两个属性中保存的是基于 0 的数值
  paste：在发生粘贴操作时触发。  
 这个 clipboardData 对象有三个方法：getData()、setData()和 clearData()。  
 
+#### Canvas
+使用<canvas>元素，必须先设置其 width 和 height 属性，指定可以绘图的区域大小。  
+要在这块画布（canvas）上绘图，需要取得绘图上下文。调用getContext()方法并传入上下文的名字。传入"2d"，就可以取得 2D 上下文对象。  
+使用 toDataURL()方法，可以导出在<canvas>元素上绘制的图像。这个方法接受一个参数，即图像的 MIME 类型格式  
+````html
+<canvas id="drawing" width=" 200" height="200">A drawing of something.</canvas>
+````
+````js
+var drawing = document.getElementById("drawing");
+//确定浏览器支持<canvas>元素
+if (drawing.getContext){
+//取得图像的数据 URI
+var imgURI = drawing.toDataURL("image/png");
+//显示图像
+var image = document.createElement("img");
+image.src = imgURI;
+document.body.appendChild(image);
+}
+````
+简单canvas都能看明白,但实际操作应该记不住这么多方法.目前项目中都没使用,日后有需要了在加深.  
+  
+##### WebGL 
+感兴趣
 
+#### 跨文档消息传递
+跨文档消息传送（cross-document messaging），有时候简称为 XDM，指的是在来自不同域的页面间传递消息。  
+XDM 的核心是 postMessage()方法。  
+接收到 XDM 消息时，会触发 window 对象的 message 事件。这个事件是以异步形式触发的。触发 message事件后，传递给 onmessage 处理程序的事件对象包含以下三方面的重要信息:  
+ data：作为 postMessage()第一个参数传入的字符串数据。  
+ origin：发送消息的文档所在的域，例如"http://www.wrox.com"。  
+ source：发送消息的文档的 window 对象的代理。这个代理对象主要用于在发送上一条消息的窗口中调用 postMessage()方法。如果发送消息的窗口来自同一个域，那这个对象就是window。  
 
-
+#### 媒体元素
+<video>和<audio>元素都提供了完善的 JavaScript 接口。下表列出了这两个元素共有的属性，通过这些属性可以知道媒体的当前状态。  
+  
+| 属 性                       | 数据类型       | 说 明                                                                    |
+| --------------------------- |:-------------:| ------------------------------------------------------------------------:|
+| autoplay                    | 布尔值        |  取得或设置autoplay标志                                                    | 
+| buffered                  | 时间范围 | 表示已下载的缓冲的时间范围的对象 | 
+| bufferedBytes | 字节范围 | 表示已下载的缓冲的字节范围的对象 | 
+| bufferingRate | 整数 | 下载过程中每秒钟平均接收到的位数 | 
+| bufferingThrottled | 布尔值 | 表示浏览器是否对缓冲进行了节流 | 
+| controls | 布尔值 | 取得或设置controls属性，用于显示或隐藏浏览器内置的控件 | 
+| currentLoop | 整数 | 媒体文件已经循环的次数 | 
+| currentSrc | 字符串 | 当前播放的媒体文件的URL | 
+| currentTime | 浮点数 | 已经播放的秒数 | 
+| defaultPlaybackRate | 浮点数 | 取得或设置默认的播放速度。默认值为1.0秒 | 
+| duration | 浮点数 | 媒体的总播放时间（秒数） | 
+| ended | 布尔值 | 表示媒体文件是否播放完成 | 
+| loop | 布尔值 | 取得或设置媒体文件在播放完成后是否再从头开始播放 | 
+| muted | 布尔值 | 取得或设置媒体文件是否静音 | 
+| networkState | 整数 | 表示当前媒体的网络连接状态： 0表示空， 1表示正在加载， 2表示正在加载元数据， 3表示已经加载了第一帧， 4表示加载完成 | 
+| paused | 布尔值 | 表示播放器是否暂停 | 
+| playbackRate | 浮点数 | 取得或设置当前的播放速度。用户可以改变这个值，让媒体播放速度变快或变慢 | 
+| played | 时间范围 | 到目前为止已经播放的时间范围 | 
+| readyState | 整数 | 表示媒体是否已经就绪（可以播放了）。 0表示数据不可用， 1表示可以显示当前帧， 2表示可以开始播放， 3表示媒体可以从头到尾播放 | 
+| seekable | 时间范围 | 可以搜索的时间范围 | 
+| seeking | 布尔值 | 表示播放器是否正移动到媒体文件中的新位置 | 
+| src | 字符串|  媒体文件的来源。任何时候都可以重写这个属性 | 
+| start | 浮点数 | 取得或设置媒体文件中开始播放的位置，以秒表示 | 
+| totalBytes | 整数 | 当前资源所需的总字节数 | 
+| videoHeight | 整数 | 返回视频（不一定是元素）的高度。只适用于<video> | 
+| videoWidth | 整数 | 返回视频（不一定是元素）的宽度。只适用于<video> | 
+| volume | 浮点数 | 取得或设置当前音量，值为0.0到1.0 | 
 
 
 
