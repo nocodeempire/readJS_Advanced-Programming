@@ -676,10 +676,20 @@ event 对象包含与创建它的特定事件有关的属性和方法。
 | eventPhase                  | Integer       | 调用事件处理程序的阶段： 1表示捕获阶段， 2表示“处于目标”， 3表示冒泡阶段       |
 | preventDefault()            | Function      | 取消事件的默认行为。如果cancelable是true，则可以使用这个方法                  |
 | stopImmediatePropagation()  | Function      | 取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用                     |
+| stopPropagation()           | Function      | 取消事件的进一步捕获或冒泡。如果bubbles为true，则可以使用这个方法              |
+| target                      | Element       | 事件的目标                                                                 |
+| trusted                     | Boolean       | 为true表示事件是浏览器生成的。为false表示事件是由开发人员通过JavaScript创建的  |
+| type                        | String        | 被触发的事件的类型                                                          |
+| view                        | AbstractView  | 与事件关联的抽象视图。等同于发生事件的window对象                              |
 
+在事件处理程序内部，对象 this 始终等于 currentTarget 的值，而 target 则只包含事件的实际目标。如果直接将事件处理程序指定给了目标元素，则 this、currentTarget 和 target 包含相同的值。  
+  
 
-
-
+load事件: 当页面完全加载后（包括所有图像、 JavaScript 文件、CSS 文件等外部资源），就会触发 window 上面的 load 事件。  
+unload事件: 与 load 事件对应的是 unload 事件，这个事件在文档被完全卸载后触发。  
+resize事件: 当浏览器窗口被调整到一个新的高度或宽度时，就会触发 resize 事件。这个事件在 window（窗口）上面触发，因此可以通过 JavaScript 或者<body>元素中的 onresize 特性来指定事件处理程序。  
+( IE、 Safari、 Chrome 和 Opera 会在浏览器窗口变化了 1 像素时就触发 resize 事件，然后随着变化不断重复触发。 Firefox 则只会在用户停止调整窗口大小时才会触发 resize 事件。由于存在这个差别，应该注意不要在这个事件的处理程序中加入大计算量的代码，因为这些代码有可能被频繁执行，从而导致浏览器反应明显变慢。浏览器窗口最小化或最大化时也会触发 resize 事件。)  
+scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际表示的则是页面中相应元素的变化。 document.documentElement.scrollTop || document.body.scrollTop
 
 
 
