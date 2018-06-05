@@ -702,10 +702,30 @@ scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际�
 3.屏幕坐标位置  
 鼠标事件发生时，不仅会有相对于浏览器窗口的位置，还有一个相对于整个电脑屏幕的位置。而通过 screenX 和 screenY 属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息。  
 
+##### 触摸与手势事件
+ touchstart：当手指触摸屏幕时触发；即使已经有一个手指放在了屏幕上也会触发。  
+ touchmove：当手指在屏幕上滑动时连续地触发。在这个事件发生期间，调用 preventDefault()可以阻止滚动。  
+ touchend：当手指从屏幕上移开时触发。  
 
+##### 表单的一些事件
+ blur：当前字段失去焦点时触发。  
+ change：对于<input>和<textarea>元素，在它们失去焦点且 value 值改变时触发；对于<select>元素，在其选项改变时触发。  
+ focus：当前字段获得焦点时触发。  
+change 事件在不同表单控件中触发的次数会有所不同。对于<input>和<textarea>元素，当它们从获得焦点到失去焦点且 value 值改变时，
+才会触发 change 事件。对于<select>元素，只要用户选择了不同的选项，就会触发 change 事件；换句话说，不失去焦点也会触发 change 事件。  
+selectionStart 和 selectionEnd 这两个属性中保存的是基于 0 的数值，表示所选择文本的范围（即文本选区开头和结尾的偏移量）  
+  
+除select()方法之外，所有文本框都有一个setSelectionRange()方法。这个方法接收两个参数：要选择的第一个字符的索引和要选择的最后一个字符之后的字符的索引
+（类似于 substring()方法的两个参数）。
 
-
-
+##### 操作剪贴板 (存在兼容性)
+ beforecopy：在发生复制操作前触发。  
+ copy：在发生复制操作时触发。  
+ beforecut：在发生剪切操作前触发。  
+ cut：在发生剪切操作时触发。  
+ beforepaste：在发生粘贴操作前触发。  
+ paste：在发生粘贴操作时触发。  
+这个 clipboardData 对象有三个方法：getData()、setData()和 clearData()。  
 
 
 
