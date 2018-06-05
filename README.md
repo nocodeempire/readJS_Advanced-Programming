@@ -659,9 +659,22 @@ getBoundingClientRect()方法。这个方法返回会一个矩形对象，包含
 ***
 #### DOM事件流
 三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段.  
-<img src="https://images2015.cnblogs.com/blog/402105/201508/402105-20150825224811297-382732435.png" />
+<img src="https://images2015.cnblogs.com/blog/402105/201508/402105-20150825224811297-382732435.png" />  
 
-
+##### 事件
+addEventListener() removeEventListener() 它们都接受 3 个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。  
+最后这个布尔值参数如果是 true，表示在捕获阶段调用事件处理程序；如果是 false，表示在冒泡阶段调用事件处理程序。(ie9开始支持)  
+event 对象包含与创建它的特定事件有关的属性和方法。  
+| 属性/方法                    | 类 型         | 说 明                                                                     |
+| --------------------------- |:-------------:| ------------------------------------------------------------------------:|
+| bubbles                     | Boolean       | 表明事件是否冒泡                                                           |
+| cancelable                  | Boolean       | 表明是否可以取消事件的默认行为                                              |
+| currentTarget               | Element       | 其事件处理程序当前正在处理事件的那个元素                                     |
+| defaultPrevented            | Boolean       | 为true表示已经调用了preventDefault()                                       |
+| detail                      | Integer       | 与事件相关的细节信息                                                       |
+| eventPhase                  | Integer       | 调用事件处理程序的阶段： 1表示捕获阶段， 2表示“处于目标”， 3表示冒泡阶段       |
+| preventDefault()            | Function      | 取消事件的默认行为。如果cancelable是true，则可以使用这个方法                  |
+| stopImmediatePropagation()  | Function      | 取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用                     |
 
 
 
