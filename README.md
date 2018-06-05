@@ -689,7 +689,10 @@ load事件: 当页面完全加载后（包括所有图像、 JavaScript 文件�
 unload事件: 与 load 事件对应的是 unload 事件，这个事件在文档被完全卸载后触发。  
 resize事件: 当浏览器窗口被调整到一个新的高度或宽度时，就会触发 resize 事件。这个事件在 window（窗口）上面触发，因此可以通过 JavaScript 或者<body>元素中的 onresize 特性来指定事件处理程序。  
 ( IE、 Safari、 Chrome 和 Opera 会在浏览器窗口变化了 1 像素时就触发 resize 事件，然后随着变化不断重复触发。 Firefox 则只会在用户停止调整窗口大小时才会触发 resize 事件。由于存在这个差别，应该注意不要在这个事件的处理程序中加入大计算量的代码，因为这些代码有可能被频繁执行，从而导致浏览器反应明显变慢。浏览器窗口最小化或最大化时也会触发 resize 事件。)  
-scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际表示的则是页面中相应元素的变化。 document.documentElement.scrollTop || document.body.scrollTop
+scroll事件: 虽然scroll事件是在window 对象上发生的，但它实际表示的则是页面中相应元素的变化。 document.documentElement.scrollTop || document.body.scrollTop  
+##### 焦点事件
+焦点事件会在页面元素获得或失去焦点时触发。利用这些事件并与 document.hasFocus()方法及document.activeElement 属性配合，可以知晓用户在页面上的行踪。有6个焦点事件.常用的就focus 和 blur, focusin与focusout  
+
 
 
 
